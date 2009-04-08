@@ -1,5 +1,7 @@
 class FluidTable
   class Column
+    include ActionView::Helpers::TagHelper
+    
     attr_accessor :identity, :alt_name, :options, :proc, :position
     
     def initialize(identity, alt_name = nil, options = {}, &proc)
@@ -13,16 +15,16 @@ class FluidTable
       alt_name || identity.to_s.humanize
     end
     
-    def html(scope,view = nil)
-      %|<td>#{interior_content(scope,view)}</td>|
+    def html(scope,table = nil)
+      content_tag(:td, interior_content(scope,table), options)
     end
     
     
     private
     
-    def interior_content(scope,view)
+    def interior_content(scope,table)
       if proc && view
-        call_by_arity(scope,view)
+        call_by_arity(scope,table.view)
       elsif scope.respond_to?(identity)
         scope.send identity
       else

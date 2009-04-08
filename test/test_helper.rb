@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'active_support'
+require 'action_view'
 require 'test/unit'
 require 'shoulda'
 require 'mocha'
