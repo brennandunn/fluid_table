@@ -22,8 +22,8 @@ class RenderTableTest < ActionController::TestCase
   context 'Displaying UsersTable' do
      setup { get :users }
      
-     should 'have stuff' do
-       assert_equal 'asdf', @response.body
+     should 'have User:ALL.size rows in the table body' do
+       assert_select 'tbody tr', 3
      end
      
   end

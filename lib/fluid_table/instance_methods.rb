@@ -7,7 +7,12 @@ class FluidTable
     end
     
     def render
-      render_table_body
+      xml = Builder::XmlMarkup.new
+      xml.table do
+        xml.tbody do
+          xml << render_table_body
+        end
+      end
     end
     
     
@@ -15,14 +20,14 @@ class FluidTable
     
     def render_table_body
       records.map do |record|
-        %|\n<tr>\n#{render_row(record)}\n</tr>|
+        %|<tr>#{render_row(record)}</tr>|
       end.join
     end
     
     def render_row(record)
       self.class.columns.map do |column|
         column.html(record, self)
-      end.join("\n")
+      end.join
     end
     
   end
