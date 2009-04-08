@@ -23,7 +23,7 @@ class FluidTable
     private
     
     def interior_content(scope,table)
-      if proc && view
+      if proc && table
         call_by_arity(scope,table.view)
       elsif scope.respond_to?(identity)
         scope.send identity

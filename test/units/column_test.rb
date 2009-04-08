@@ -35,7 +35,7 @@ class ColumnTest < Test::Unit::TestCase
       end
 
       should "call a column's proc (if exists) against the scope of the current view" do
-        view = mock({ :link_to_google => 'http://google.com' })
+        view = mock({ :view => mock({ :link_to_google => 'http://google.com' }) })
         assert_equal_html '<td>http://google.com</td>', @google_column.html(nil,view)
       end
       
@@ -46,9 +46,7 @@ class ColumnTest < Test::Unit::TestCase
         assert_match /id="bar"/, @name_column.html(mock)
       end
       
-      should_eventually 'append alternating class names' do
-        
-      end
+      should_eventually 'append alternating class names'
       
     end
     
