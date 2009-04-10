@@ -45,9 +45,7 @@ class ColumnTest < Test::Unit::TestCase
         @name_column.options = { :id => 'bar' }
         assert_match /id="bar"/, @name_column.html(mock)
       end
-      
-      should_eventually 'append alternating class names'
-      
+            
     end
     
   end

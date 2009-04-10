@@ -20,11 +20,19 @@ class RenderTableTest < ActionController::TestCase
   tests RenderController
   
   context 'Displaying UsersTable' do
-     setup { get :users }
-     
-     should 'have User:ALL.size rows in the table body' do
-       assert_select 'tbody tr', 3
-     end
+    setup { get :users }
+    
+    should 'display the header DIV' do
+      assert_select 'div', /this is the header/i
+    end
+    
+    should 'display the footer DIV' do
+      assert_select 'div', /this is the footer/i
+    end
+    
+    should 'have User:ALL.size rows in the table body' do
+      assert_select 'tbody tr', 3
+    end
      
   end
   

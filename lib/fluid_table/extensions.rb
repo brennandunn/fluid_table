@@ -12,3 +12,4 @@ class Proc #:nodoc:
     end.bind(object)
   end
 end
+

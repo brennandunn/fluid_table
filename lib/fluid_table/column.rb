@@ -2,13 +2,14 @@ class FluidTable
   class Column
     include ActionView::Helpers::TagHelper
     
-    attr_accessor :identity, :alt_name, :options, :proc, :position
+    attr_accessor :identity, :alt_name, :options, :html_options, :proc, :position
     
     def initialize(identity, alt_name = nil, options = {}, &proc)
-      self.identity   = identity
-      self.alt_name   = alt_name
-      self.options    = options
-      self.proc       = proc
+      self.html_options = options.delete(:html)
+      self.identity     = identity
+      self.alt_name     = alt_name
+      self.options      = options
+      self.proc         = proc
     end
     
     def name
@@ -24,7 +25,7 @@ class FluidTable
     
     def interior_content(scope,table)
       if proc && table
-        call_by_arity(scope,table.view)
+        call_by_arity(scope,table)
       elsif scope.respond_to?(identity)
         scope.send identity
       else
@@ -32,13 +33,14 @@ class FluidTable
       end
     end
     
-    def call_by_arity(scope,view)
+    def call_by_arity(scope,table)
       call_arguments = case proc.arity
         when 1      then [scope]
-        # TODO
+        when 2      then [scope, table]
+        when 3      then [scope, table, self]
         else        []
       end
-      proc.bind(view).call(*call_arguments)
+      proc.bind(table.view).call(*call_arguments)
     end
     
   end

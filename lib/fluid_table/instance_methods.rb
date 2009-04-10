@@ -7,14 +7,19 @@ class FluidTable
     end
     
     def render
-      xml = Builder::XmlMarkup.new
-      xml.table do
-        xml.tbody do
-          xml << render_table_body
+      returning xml = Builder::XmlMarkup.new do
+        xml << render_header
+        xml.table(table_options || {}) do
+          xml.tbody do
+            xml << render_table_body
+          end
         end
+        xml << render_footer
       end
     end
     
+    def render_header ; '' ; end
+    def render_footer ; '' ; end
     
     private
     
