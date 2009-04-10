@@ -1,13 +1,8 @@
 class FluidTable
   module ClassMethods
     
-    def columns
-      @columns ||= Array.new
-      @columns
-    end
-    
     def define_column(identity, alt_name = nil, options = {}, &proc)
-      columns.push(Column.new(identity, alt_name, options, &proc))
+      (self.columns ||= []).push(Column.new(identity, alt_name, options, &proc))
     end
     
     def render(view,records)
