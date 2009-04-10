@@ -7,25 +7,25 @@ class FluidTable
     end
     
     def render
-      returning xml = Builder::XmlMarkup.new do
-        xml << render_header
-        xml.table(table_options || {}) do
-          xml.tbody do
-            xml << render_table_body
-          end
+      xml = Builder::XmlMarkup.new
+      xml << render_header
+      xml.table(table_options || {}) do
+        xml.tbody do
+          xml << render_table_body
         end
-        xml << render_footer
       end
+      xml << render_footer
     end
     
     def render_header ; '' ; end
     def render_footer ; '' ; end
     
+    
     private
     
     def render_table_body
       records.map do |record|
-        %|<tr>#{render_row(record)}</tr>|
+        content_tag(:tr,render_row(record),render_tr_options(record))
       end.join
     end
     
@@ -33,6 +33,14 @@ class FluidTable
       self.class.columns.map do |column|
         column.html(record, self)
       end.join
+    end
+    
+    def render_tr_options(record)
+      case opt = row_options
+        when Proc   then opt.call(Context.new(self,record))
+        when Hash   then opt
+        else        {}
+      end
     end
     
   end
