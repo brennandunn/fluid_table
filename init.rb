@@ -1,0 +1,1 @@
+require 'fluid_table'
