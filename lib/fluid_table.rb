@@ -7,8 +7,7 @@ require 'fluid_table/context'
 class FluidTable
   include ActionView::Helpers::TagHelper
   
-  class_inheritable_accessor :row_options
-  class_inheritable_array :columns
+  class_inheritable_accessor :row_options, :columns
   class_inheritable_hash :table_options
   attr_accessor :view, :records
   
