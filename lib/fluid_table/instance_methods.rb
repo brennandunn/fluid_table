@@ -1,9 +1,10 @@
 class FluidTable
   module InstanceMethods
     
-    def initialize(view,records)
-      self.view     = view
-      self.records  = records
+    def initialize(view,records,render_options={})
+      self.view           = view
+      self.records        = records
+      self.render_options = render_options
     end
     
     def render

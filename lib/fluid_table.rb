@@ -9,7 +9,7 @@ class FluidTable
   
   class_inheritable_accessor :row_options, :columns
   class_inheritable_hash :table_options
-  attr_accessor :view, :records
+  attr_accessor :view, :records, :render_options
   
   extend ClassMethods
   include InstanceMethods

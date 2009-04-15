@@ -3,6 +3,7 @@ class UsersTable < FluidTable
   self.table_options = { :class => 'dataTable' }
   
   define_column :id, 'User #'
+  
   define_column :name do |user|
     user.name.upcase
   end

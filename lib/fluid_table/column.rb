@@ -5,7 +5,7 @@ class FluidTable
     attr_accessor :identity, :alt_name, :options, :html_options, :proc, :position
     
     def initialize(identity, alt_name = nil, options = {}, &proc)
-      self.html_options = options.delete(:html)
+      self.html_options = options.is_a?(Hash) ? options.delete(:html) : {}
       self.identity     = identity
       self.alt_name     = alt_name
       self.options      = options
@@ -17,7 +17,8 @@ class FluidTable
     end
     
     def html(scope,table = nil)
-      content_tag(:td, interior_content(scope,table), options)
+      argument = options.is_a?(Proc) ? options.call(Context.new(table,scope)) : options
+      content_tag(:td, interior_content(scope,table), argument[:html] || {})
     end
     
     
