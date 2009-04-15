@@ -6,5 +6,9 @@ class FluidTable
       super
     end
     
+    def view
+      table.view if table
+    end
+    
   end
 end
