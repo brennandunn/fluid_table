@@ -9,7 +9,7 @@ class FluidTable
     end
         
     def displayed_columns
-      columns.select(&:display?)
+      columns.select(&:display?).sort
     end
     
     def hidden_columns

@@ -41,7 +41,7 @@ class ConfigurationTest < Test::Unit::TestCase
     
   end
   
-  context 'When overriding position or visibility through some sort of configuration' do
+  context 'When overriding position or visibility' do
     
     should 'call #customize_column with each column object on table instantiation' do
       @table.columns.each do |column|
@@ -53,9 +53,15 @@ class ConfigurationTest < Test::Unit::TestCase
     should 'override default column visibility settings when instructed' do
       column = get_column(:age)
       assert @table.displayed_columns.include?(column)
-      transform_column(column = get_column(:age), false)
+      transform_column(get_column(:age), false)
       @table.send :load_customizations
       assert ! @table.displayed_columns.include?(column)
+    end
+    
+    should "be able to set a column's position which trumps the default" do
+      age_column = get_column(:age)
+      transform_column(age_column, true, 0)
+      assert_equal age_column, @table.displayed_columns.first
     end
     
   end

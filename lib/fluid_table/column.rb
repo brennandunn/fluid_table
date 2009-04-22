@@ -16,11 +16,19 @@ class FluidTable
     end
     
     def <=>(other_column)
+      if position == other_column.position
+        return -1 if positioned? && !other_column.positioned?
+        return 1 if !positioned? && other_column.positioned?
+      end
       position <=> other_column.position
     end
     
     def position
       configured_position || default_position
+    end
+    
+    def positioned?
+      !!configured_position
     end
     
     def name
