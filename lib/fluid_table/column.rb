@@ -1,5 +1,6 @@
 class FluidTable
   class Column
+    include Comparable
     include ActionView::Helpers::TagHelper
     
     attr_accessor :identity, :alt_name, :options, :html_options, :proc, :position
@@ -10,6 +11,14 @@ class FluidTable
       self.alt_name     = alt_name
       self.options      = options
       self.proc         = proc
+    end
+    
+    def <=>(other_column)
+      position <=> other_column.position
+    end
+    
+    def position
+      configured_position || default_position
     end
     
     def name

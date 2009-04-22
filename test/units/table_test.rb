@@ -9,6 +9,19 @@ class TableTest < Test::Unit::TestCase
       assert_match %r{table class="dataTable"}, render_users
     end
     
+    context 'Ordering of columns' do
+
+      should 'be defaultly positioned in the order of definition' do
+        assert_equal 0, UsersTable.columns.first.default_position
+        assert_equal UsersTable.columns.size-1, UsersTable.columns.last.default_position
+      end
+
+      should 'have the #sort order be identical to the default positioning when there are no custom positions' do
+        assert_equal UsersTable.columns, UsersTable.columns.sort
+      end
+
+    end
+    
     context 'Supplying row (<tr>) options' do
       
       should 'output standard hash options' do
