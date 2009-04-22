@@ -5,6 +5,15 @@ class FluidTable
       self.view           = view
       self.records        = records
       self.render_options = render_options
+      load_customizations
+    end
+        
+    def displayed_columns
+      columns.select(&:display?)
+    end
+    
+    def hidden_columns
+      columns - displayed_columns
     end
     
     def render
@@ -18,11 +27,21 @@ class FluidTable
       xml << render_footer
     end
     
+    def reset!
+      self.class.reset!
+    end
+    
+    # Stub methods
+    def customize_column(column) ; column ; end
     def render_header ; '' ; end
     def render_footer ; '' ; end
     
     
     private
+  
+    def load_customizations
+      columns.map { |c| customize_column(c) }
+    end
     
     def render_table_body
       records.map do |record|
@@ -31,7 +50,7 @@ class FluidTable
     end
     
     def render_row(record)
-      self.class.columns.map do |column|
+      displayed_columns.map do |column|
         column.html(record, self)
       end.join
     end

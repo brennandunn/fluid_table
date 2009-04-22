@@ -4,11 +4,22 @@ class FluidTable
     def define_column(*args, &proc)
       options = args.extract_options!
       identity, alt_name = *args
-      (self.columns ||= Array.new).push(Column.new(identity, alt_name, options, &proc))
+      returning column = Column.new(identity, alt_name, options, &proc) do
+        (self.columns ||= Array.new).push(column)
+        column.default_position = columns.index(column)
+      end
+    end
+    
+    def displayed_columns
+      columns.select(&:display?)
     end
     
     def render(view,records)
       new(view,records).render
+    end
+    
+    def reset!
+      columns.each(&:reset!)
     end
     
     def valid?

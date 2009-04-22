@@ -8,6 +8,12 @@ class UsersTable < FluidTable
     user.name.upcase
   end
   
+  define_column :age
+  define_column :gender
+  
+  UsersTable.define_column :displayed_column
+  UsersTable.define_column :hidden_column, :default => false
+  
   # overwrites
   
   def render_header
