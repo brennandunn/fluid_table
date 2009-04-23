@@ -3,14 +3,16 @@ class FluidTable
     include Comparable
     include ActionView::Helpers::TagHelper
     
-    attr_accessor :identity, :alt_name, :options, :proc
+    attr_accessor :identity, :alt_name, :options, :html_options, :proc
     attr_accessor :is_visible, :default_position, :configured_position  # overrides
     
+    DefaultOptions = { :default => true }
+    
     def initialize(identity, alt_name = nil, options = {}, &proc)
-      default_options = { :default => true }
       self.identity     = identity
       self.alt_name     = alt_name
-      self.options      = options.reverse_merge(default_options)
+      self.options      = options.reverse_merge(DefaultOptions)
+      self.html_options = options.delete(:html) || {}
       self.proc         = proc
     end
     
@@ -35,8 +37,8 @@ class FluidTable
     end
     
     def html(scope,table = nil)
-      argument = options.is_a?(Proc) ? options.call(Context.new(table,scope)) : options
-      content_tag(:td, interior_content(scope,table), argument[:html])
+      attributes = html_options.is_a?(Proc) ? html_options.call(Context.new(table,scope)) : html_options
+      content_tag(:td, interior_content(scope,table), attributes)
     end
     
     def display?

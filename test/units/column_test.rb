@@ -40,14 +40,14 @@ class ColumnTest < Test::Unit::TestCase
       end
       
       should 'be able to set custom HTML attributes when supplied a HASH' do
-        @name_column.options = { :html => { :class => 'foo' } }
+        @name_column.html_options = { :class => 'foo' }
         assert_match /class="foo"/, @name_column.html(mock)
-        @name_column.options = { :html => { :id => 'bar' } }
+        @name_column.html_options = { :id => 'bar' }
         assert_match /id="bar"/, @name_column.html(mock)
       end
     
       should 'be able to set custom HTML attributes when supplied a PROC' do
-        @name_column.options = Proc.new { |context| { :html => { :id => "name_#{context.record.id}" } } }
+        @name_column.html_options = Proc.new { |context| { :id => "name_#{context.record.id}" } }
         assert_match /id="name_5"/, @name_column.html(mock(:id => '5'))
       end
     

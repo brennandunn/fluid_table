@@ -2,7 +2,7 @@ class FluidTable
   module ClassMethods
     
     def define_column(*args, &proc)
-      options = args.extract_options!
+      options = [Hash,Proc].include?(args.last.class) ? args.pop : {}
       identity, alt_name = *args
       returning column = Column.new(identity, alt_name, options, &proc) do
         (self.columns ||= Array.new).push(column)

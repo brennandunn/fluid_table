@@ -8,7 +8,7 @@ class UsersTable < FluidTable
     user.name.upcase
   end
   
-  define_column :age
+  define_column :age, :html => Proc.new { |c| { :class => "table_id_#{c.table.object_id}" } }
   define_column :gender
   
   UsersTable.define_column :displayed_column
