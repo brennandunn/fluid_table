@@ -10,10 +10,6 @@ class FluidTable
       end
     end
     
-    def displayed_columns
-      columns.select(&:display?)
-    end
-    
     def render(view,records)
       new(view,records).render
     end
